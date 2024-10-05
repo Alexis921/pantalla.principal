@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartcont - Plataforma Tributaria</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            background-color: #f0f4f8;
+        }
+
+        /* Barra lateral a la izquierda */
+        nav {
+            background-color: #003366;
+            width: 250px;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 15px 0;
+            padding: 12px;
+            display: block;
+            width: 100%;
+            background-color: #2a9c93; /* Color verde */
+            text-align: left;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        nav a:hover {
+            background-color: #1ba18f; /* Color verde oscuro */
+            transform: translateX(5px);
+        }
+
+        /* Contenedor principal */
+        main {
+            flex-grow: 1;
+            margin-left: 270px; /* espacio para la barra lateral */
+            padding: 40px;
+        }
+
+        h1 {
+            color: #1376d8;
+            font-size: 36px;
+        }
+
+        /* Estilos para las secciones */
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #004080;
+            color: white;
+        }
+
+        button {
+            background-color: #01796f;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #026b5d;
+            transform: translateY(-3px);
+        }
+
+        /* Botón "Traer Data" */
+        .traer-data {
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        /* Adaptabilidad a pantallas pequeñas */
+        @media (max-width: 768px) {
+            nav {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            main {
+                margin-left: 0;
+            }
+
+            nav a {
+                text-align: center;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <h1>Bienvenido a Smartcont</h1>
+        <p>Elige una opción del menú para gestionar tus impuestos de manera eficiente.</p>
+
+        <!-- Secciones dinámicas -->
+        <section id="inicio" class="active">
+            <h2>Inicio</h2>
+            <p>Aquí podrás realizar un resumen de tu situación tributaria.</p>
+        </section>
+
+        <section id="ventas">
+            <h2>Ventas</h2>
+            <button class="traer-data" onclick="traerData()">Traer Data</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Periodo</th>
+                        <th>Denominación</th>
+                        <th>Base Imponible</th>
+                        <th>No Gravados</th>
+                        <th>IGV</th>
+                        <th>Total</th>
+                        <th>Seleccionar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-ventas">
+                    <!-- Aquí se añadirá dinámicamente la data de ventas -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="compras">
+            <h2>Compras</h2>
+            <button class="traer-data" onclick="traerData()">Traer Data</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Periodo</th>
+                        <th>Denominación</th>
+                        <th>Base Imponible</th>
+                        <th>No Gravados</th>
+                        <th>IGV</th>
+                        <th>Total</th>
+                        <th>Seleccionar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-compras">
+                    <!-- Aquí se añadirá dinámicamente la data de compras -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="percepciones">
+            <h2>Percepciones</h2>
+            <p>Gestión de percepciones.</p>
+        </section>
+
+        <section id="retenciones">
+            <h2>Retenciones</h2>
+            <p>Gestión de retenciones.</p>
+        </section>
+
+        <section id="liquidacion">
+            <h2>Liquidación</h2>
+            <p>Procesa la liquidación de tus impuestos aquí.</p>
+        </section>
+
+        <section id="configuracion">
+            <h2>Configuración</h2>
+            <p>Aquí podrás configurar tu régimen tributario.</p>
+        </section>
+    </main>
+
+    <!-- Barra de navegación lateral -->
+    <nav>
+        <a href="#" onclick="mostrarSeccion('inicio')">Inicio</a>
+        <a href="#" onclick="mostrarSeccion('ventas')">Ventas</a>
+        <a href="#" onclick="mostrarSeccion('compras')">Compras</a>
+        <a href="#" onclick="mostrarSeccion('percepciones')">Percepciones</a>
+        <a href="#" onclick="mostrarSeccion('retenciones')">Retenciones</a>
+        <a href="#" onclick="mostrarSeccion('liquidacion')">Liquidación</a>
+        <a href="#" onclick="mostrarSeccion('configuracion')">Configuración</a>
+    </nav>
+
+    <script>
+        // Función para mostrar la sección seleccionada
+        function mostrarSeccion(seccion) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('section').forEach(function(sec) {
+                sec.classList.remove('active');
+            });
+            // Mostrar la sección seleccionada
+            document.getElementById(seccion).classList.add('active');
+        }
+
+        // Función para "traer data" (simulación)
+        function traerData() {
+            alert("Funcionalidad para traer data aún no implementada.");
+        }
+    </script>
+</body>
+</html>
